@@ -2,7 +2,7 @@ import * as fs from 'fs-extra';
 
 export class JsonStore {
 
-	private _data: object;
+	private _data: object = {};
 	public _ready: Promise<any>;
 
 	async set(key: string, value: any){
@@ -30,8 +30,8 @@ export class JsonStore {
 	}
 
 	private async setup() {
-		await fs.ensureFile(this.fileName);
-		return this.read();
+		let exists = await fs.pathExists(this.fileName);
+		return exists ? this.read() : Promise.resolve();
 	}
 
 	public async read() {
@@ -39,7 +39,7 @@ export class JsonStore {
 	}
 
 	public async write() {
-		return fs.writeJSON(this.fileName, this._data);
+		return fs.outputJSON(this.fileName, this._data);
 	}
 
 	public async catch(fn: any){
