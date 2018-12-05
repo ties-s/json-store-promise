@@ -1,0 +1,17 @@
+{
+  "name": "json-store-promise",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ties Schwertasek",
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "^7.0.1"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^5.0.4"
+  }
+}

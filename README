@@ -1,0 +1,63 @@
+# JSON Store Promise
+
+Async local file storage with promises.
+
+## Usage
+
+### Promise
+```typescript
+import { JsonStore } from 'json-store-promise';
+
+JsonStore.create('./file.json').then(store => {
+	// Use, may throw errors
+	store.set('key', 'value');
+	store.get('key');
+	// Catch errors
+	store.remove('key').catch(e => console.log(e));
+});
+```
+
+### async/await
+```typescript
+import { JsonStore } from 'json-store-promise';
+
+try {
+	let store = await JsonStore.create('./file.json');
+
+	await store.set('key', 'value')
+	let value = await store.get('key')
+	await store.remove('key')
+} catch (Error e) {
+	// Handle error
+	console.log(e)
+}
+```
+## API
+
+### Create store object
+```typescript
+JsonStore.create('file.json'): Promise<JsonStore>
+```
+
+### Add value
+```typescript
+store.set('key', 'value'): Promise<void>
+```
+- `.then(() => ...)` no value, when saved to file
+- `.catch(error => ...)` file errors
+
+
+### Get value
+```typescript
+store.get('key'): Promise<any>
+```
+- `.then(value => ...)` the value
+- `.catch(error => ...)` no errors thrown
+
+### Remove value
+```typescript
+store.set('key', 'value'): Promise<void>
+```
+- `.then(() => ...)` no value, when saved to file
+- `.catch(error => ...)` file errors
+
