@@ -3,42 +3,55 @@ import * as fs from 'fs-extra';
 export class JsonStore {
 
 	private _data: object;
-	public _setup: Promise<any>;
+	public _ready: Promise<any>;
 
 	async set(key: string, value: any){
-		this._data[key] = value;
-		return this.write();
+		return this._ready.then(() => {
+			this._data[key] = value;
+			return this.write();
+		})
 	}
 
 	async get(key: string) {
-		return Promise.resolve(this._data[key]);
+		return this._ready.then(() => {
+			return Promise.resolve(this._data[key]);
+		})
 	}
 
 	async remove(key: string) {
-		delete this._data[key];
-		return this.write();
+		return this._ready.then(() => {
+			delete this._data[key];
+			return this.write();
+		})
 	}
 
 	constructor(private fileName: string) {
-		this._setup = this.setup().then(() => this);
+		this._ready = this.setup().then(() => this);
 	}
 
 	private async setup() {
 		await fs.ensureFile(this.fileName);
-		
+		return this.read();
 	}
 
-	private async read() {
+	public async read() {
 		this._data = await fs.readJson(this.fileName);
 	}
 
-	private async write() {
+	public async write() {
 		return fs.writeJSON(this.fileName, this._data);
 	}
 
-	public static create(fileName: string): Promise<JsonStore> {
-		let s = new JsonStore(fileName);
-		return s._setup;
+	public async catch(fn: any){
+		return this._ready.catch(fn);
+	}
+
+	public async then(fn: (s: JsonStore) => void){
+		return this._ready.then(() => fn(this));
+	}
+
+	public static create(fileName: string): JsonStore {
+		return new JsonStore(fileName);
 	}
 
 }
