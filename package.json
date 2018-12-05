@@ -1,12 +1,12 @@
 {
   "name": "json-store-promise",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-	"test": "echo \"Error: no test specified\" && exit 1",
-	"build": "tsc",
-	"prepublish": "npm run build"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "prepublish": "npm run build"
   },
   "author": "Ties Schwertasek",
   "license": "MIT",
