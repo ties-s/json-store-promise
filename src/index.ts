@@ -1,6 +1,6 @@
 import * as fs from 'fs-extra';
 
-export class JsonStorage {
+export class JsonStore {
 
 	private _data: object;
 	public _setup: Promise<any>;
@@ -36,8 +36,8 @@ export class JsonStorage {
 		return fs.writeJSON(this.fileName, this._data);
 	}
 
-	public static create(fileName: string): Promise<JsonStorage> {
-		let s = new JsonStorage(fileName);
+	public static create(fileName: string): Promise<JsonStore> {
+		let s = new JsonStore(fileName);
 		return s._setup;
 	}
 
