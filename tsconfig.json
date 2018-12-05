@@ -10,7 +10,6 @@
         "experimentalDecorators": true,
         "module": "commonjs",
         "target": "es6",
-        "watch": true,
         "typeRoots": [
             "node_modules/@types"
         ],
